@@ -19,12 +19,7 @@
 
       <!-- Display products in a list with name and price -->
       <div v-for="product in products" :key="product.id" class="product-item">
-        <input
-          type="radio"
-          :id="product.id"
-          v-model="selectedProduct"
-          :value="product"
-        />
+        <input type="radio" :id="product.id" v-model="selectedProduct" :value="product" />
         <label :for="product.id">
           <strong>{{ product.name }}</strong> - ${{ product.price ? product.price.toFixed(2) : 'N/A' }}
         </label>
@@ -41,7 +36,8 @@
         <h3>Total Price: ${{ totalPrice.toFixed(2) }}</h3>
       </div>
 
-      <button @click="submitOrder" :disabled="!selectedProduct || quantity <= 0" class="order-button">Place Order</button>
+      <button @click="submitOrder" :disabled="!selectedProduct || quantity <= 0" class="order-button">Place
+        Order</button>
     </div>
 
     <!-- Loading message if no products are fetched yet -->
@@ -71,7 +67,7 @@ export default {
   methods: {
     async fetchProducts() {
       try {
-        const response = await fetch('http://localhost:3030/products');
+        const response = await fetch(`${process.env.VUE_APP_PRODUCT_SERVICE_URL}/products`);
         if (response.ok) {
           this.products = await response.json();
         } else {
@@ -89,7 +85,8 @@ export default {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/orders', {
+        const response = await fetch(`${process.env.VUE_APP_ORDER_SERVICE_URL}/orders`, {
+
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -116,13 +113,13 @@ export default {
 </script>
 
 <style scoped>
-
 /* Container for the store */
 .store-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9); /* Make the container semi-transparent */
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Make the container semi-transparent */
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -161,7 +158,8 @@ export default {
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-h2, h3 {
+h2,
+h3 {
   text-align: center;
   color: #42b983;
 }
